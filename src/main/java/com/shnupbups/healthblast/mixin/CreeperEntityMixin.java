@@ -17,8 +17,11 @@ public abstract class CreeperEntityMixin extends HostileEntity {
 		super(entityType, world);
 	}
 
-	@ModifyArg(method = "explode()V", at = @At(value="INVOKE", target="Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/explosion/Explosion$DestructionType;)Lnet/minecraft/world/explosion/Explosion;"), index = 4)
-	public float multiplyExplosionPower(float power) {
+	@ModifyArg(method = "explode()V",
+			at = @At(value = "INVOKE",
+					target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;"),
+			index = 4)
+	private float modifyExplosionPower(float power) {
 		return power * HealthBlast.getExplosionMultiplier(this.getHealth());
 	}
 }
